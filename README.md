@@ -1,2 +1,2 @@
 # Neuro_Draft
-Simpli Artificial Intelligence,created to help with draft phase
+Simple Artificial Intelligence,created to help with draft phase in DOTA2
