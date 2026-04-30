@@ -1,0 +1,24 @@
+# data
+*.csv
+*.npz
+*.npy
+
+# models
+*.pkl
+*.joblib
+
+# python
+__pycache__/
+*.pyc
+
+# jupyter
+.ipynb_checkpoints/
+
+# env
+.env
+venv/
+dota_env/
+
+# system
+.DS_Store
+Thumbs.db
