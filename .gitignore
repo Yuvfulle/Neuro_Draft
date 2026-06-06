@@ -1,8 +1,2 @@
-# ML файлы
-*.joblib
-*.npy
-*.npz
-
-# виртуальное окружение
-venv/
-env/
+__pycache__/
+.venv/

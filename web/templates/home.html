@@ -1,0 +1,133 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Neuro Draft</title>
+    <link rel="stylesheet" href="{% static 'web/home.css' %}?v=2">
+</head>
+<body>
+    {{ heroes|json_script:"heroes-data" }}
+    {{ roles|json_script:"roles-data" }}
+    {{ config|json_script:"draft-config-data" }}
+
+    <main>
+        <header class="topbar">
+            <h1>Neuro Draft</h1>
+            <span class="badge">Модель загружена</span>
+        </header>
+
+        <div class="app-shell">
+            <section class="panel draft-panel">
+                <div class="panel-body">
+                    <div class="controls">
+                        <div>
+                            <label for="side">Сторона</label>
+                            <select id="side">
+                                <option value="radiant">Radiant</option>
+                                <option value="dire">Dire</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="rank">Ранг</label>
+                            <select id="rank">
+                                <option value="15">Herald / Guardian</option>
+                                <option value="30">Crusader / Archon</option>
+                                <option value="45">Legend</option>
+                                <option value="58" selected>Ancient / Divine</option>
+                                <option value="75">Immortal</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="draft-actions">
+                        <button class="submit" id="recommend-button" type="button">Подобрать</button>
+                    </div>
+
+                    <div class="draft-grid">
+                        <section class="team-block draft-team">
+                            <div class="team-head">
+                                <h3>Твоя команда</h3>
+                                <span class="count" id="ally-count">0 / {{ config.team_size }}</span>
+                            </div>
+                            <div class="picker">
+                                <div class="search-field">
+                                    <input id="ally-input" autocomplete="off" placeholder="Герой">
+                                    <div class="suggestions" id="ally-suggestions"></div>
+                                </div>
+                                <button type="button" data-add="ally" aria-label="Добавить героя">+</button>
+                            </div>
+                            <div class="chips" id="ally-chips"></div>
+                            <button class="secondary-button team-clear" id="clear-ally-button" type="button">Очистить</button>
+                        </section>
+
+                        <section class="team-block draft-team enemy">
+                            <div class="team-head">
+                                <h3>Противники</h3>
+                                <span class="count" id="enemy-count">0 / {{ config.team_size }}</span>
+                            </div>
+                            <div class="picker">
+                                <div class="search-field">
+                                    <input id="enemy-input" autocomplete="off" placeholder="Герой">
+                                    <div class="suggestions" id="enemy-suggestions"></div>
+                                </div>
+                                <button type="button" data-add="enemy" aria-label="Добавить героя">+</button>
+                            </div>
+                            <div class="chips" id="enemy-chips"></div>
+                            <button class="secondary-button team-clear" id="clear-enemy-button" type="button">Очистить</button>
+                        </section>
+
+                        <section class="team-block ban-block">
+                            <div class="team-head">
+                                <h3>Баны</h3>
+                                <span class="count" id="ban-count">0 / {{ config.max_bans }}</span>
+                            </div>
+                            <div class="picker">
+                                <div class="search-field">
+                                    <input id="ban-input" autocomplete="off" placeholder="Забаненный герой">
+                                    <div class="suggestions" id="ban-suggestions"></div>
+                                </div>
+                                <button type="button" id="add-ban-button" aria-label="Добавить бан">+</button>
+                            </div>
+                            <div class="chips" id="ban-chips"></div>
+                            <button class="secondary-button team-clear" id="clear-ban-button" type="button">Очистить баны</button>
+                        </section>
+                    </div>
+
+                    <div class="status" id="role-status"></div>
+                    <div class="message" id="message"></div>
+                </div>
+            </section>
+
+            <section class="panel recommendations-panel">
+                <div class="panel-head">
+                    <h2>Рекомендации</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="filters-head">
+                        <h3>Показывать роли</h3>
+                        <button class="secondary-button compact-button" id="free-role-filter-button" type="button">Только свободные</button>
+                    </div>
+                    <div class="role-filters" id="role-filters">
+                        {% for role in roles %}
+                            <label class="role-filter">
+                                <input type="checkbox" value="{{ role.id }}" checked>
+                                <span>{{ role.name }}</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <section class="results" id="results"></section>
+            </section>
+        </div>
+    </main>
+
+    <script src="{% static 'web/home-state.js' %}?v=2"></script>
+    <script src="{% static 'web/home-search.js' %}?v=2"></script>
+    <script src="{% static 'web/home-draft.js' %}?v=2"></script>
+    <script src="{% static 'web/home-api.js' %}?v=2"></script>
+    <script src="{% static 'web/home-results.js' %}?v=2"></script>
+    <script src="{% static 'web/home.js' %}?v=2"></script>
+</body>
+</html>
